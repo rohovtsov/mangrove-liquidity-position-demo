@@ -4,16 +4,17 @@ import style from './style.module.scss';
 
 interface Props {
   name: string;
+  source?: 'material' | 'native';
   className?: string;
   alt?: string;
 }
 
-function useFetchSvg(url: string) {
+function useFetchSvg(url?: string) {
   const [svgContent, setSvgContent] = useState<string | null>(null);
   const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
-    const fetchSvg = async () => {
+    const fetchSvg = async (url: string) => {
       try {
         const response = await fetch(url, {
           credentials: 'same-origin',
@@ -35,21 +36,23 @@ function useFetchSvg(url: string) {
     };
 
     if (url) {
-      fetchSvg();
+      fetchSvg(url);
     }
   }, [url]);
 
   return { svgContent, error };
 }
 
-export default function Icon({ name, className, alt }: Props) {
-  const url = `/assets/icons/${name}.svg`;
+export default function Icon({ name, source = 'native', className, alt }: Props) {
+  const url = source === 'native' ? `/assets/icons/${name}.svg` : undefined;
   const { svgContent } = useFetchSvg(url);
+  const content = (source === 'material' ? name : svgContent) ?? '';
+  const sourceClassName = source === 'material' ? 'material-icons-outlined' : '';
 
   return (
     <ins
-      className={`${style['icon']} ${className}`}
-      dangerouslySetInnerHTML={svgContent ? {__html: svgContent} : undefined}
+      className={`${style['icon']} ${className} ${sourceClassName}`}
+      dangerouslySetInnerHTML={{ __html: content }}
       aria-label={alt}
       role={'img'}
     />

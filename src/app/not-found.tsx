@@ -2,13 +2,18 @@ import styles from "./not-found.module.scss";
 import LaggingText from '@/modules/ui/lagging-text/lagging-text.component';
 import Image from 'next/image';
 import PrettyButton from '@/modules/ui/pretty-button/pretty-button.component';
+import Icon from '@/modules/ui/icon/icon.component';
+import Background from '@/modules/ui/background/background.component';
 
 export default function NotFound() {
+  const images = ['stork', 'parrot', 'heron'];
+  const image = images[Math.floor(Math.random() * images.length)];
+
   return (
     <div className={`${styles['page']} slide-animation`}>
       <div className="container">
         <div className={`${styles['page-inner']}`}>
-          <Image src="/assets/parrot.svg" alt="404 Image" width={100} height={137}/>
+          <Image src={`/assets/${image}.svg`} alt="404 Image" width={200} height={140}/>
 
           <h1>
             <LaggingText texts={[
@@ -32,9 +37,20 @@ export default function NotFound() {
             or return to the homepage.
           </p>
 
-          <PrettyButton href={'/'}>Go Back</PrettyButton>
+          <div className={styles['buttons-wrap']}>
+            <PrettyButton href={'/'}>
+              <span className="pretty-button-icon"><Icon name="arrow_back" source="material" /></span>
+              Go Back
+            </PrettyButton>
+
+            <PrettyButton href={'/not-found'} variant="secondary">
+              <span className="pretty-button-icon"><Icon name="refresh" source="material" /></span>
+              Reload
+            </PrettyButton>
+          </div>
         </div>
       </div>
+      <Background variant="404"/>
     </div>
   );
 }

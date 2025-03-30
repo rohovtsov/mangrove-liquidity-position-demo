@@ -1,11 +1,31 @@
 .layout-nav {
+  display: flex;
+  align-items: center;
+  gap: 36px;
   height: 100%;
+}
+
+.logo {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 1;
+  padding: 0;
+
+  > img {
+    vertical-align: 1px;
+  }
+
+  > span {
+    padding-top: 4px;
+  }
 }
 
 .layout-nav ul {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 12px;
   height: 100%;
 }
 
@@ -15,10 +35,18 @@
   user-select: none;
 
   &.nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     padding: 8px 12px;
     border-radius: 8px;
     font-size: 14px;
-    transition: background .2s;
+    transition: background .2s, color .2s;
+    color: #7bafb8;
+
+    ins {
+      font-size: 16px;
+    }
 
     &.active {
       background: #1e3c43;
@@ -26,24 +54,19 @@
     }
 
     &:not(.active):hover {
-      background: #295059;
+      background: #12282c;
+    }
+
+    &.active {
+      color: #fff;
+
+      ins {
+        color: #00BF58;
+      }
     }
   }
+}
 
-  &.logo {
-    font-size: 20px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    line-height: 1;
-    padding: 0;
-
-    > img {
-      vertical-align: 1px;
-    }
-
-    > span {
-      padding-top: 4px;
-    }
-  }
+.icon-search {
+  margin-right: -2px;
 }

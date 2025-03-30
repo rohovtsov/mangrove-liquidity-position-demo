@@ -1,0 +1,64 @@
+.background {
+  position: absolute;
+  z-index: -1;
+  top: -64px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
+.variant-404 .background {
+  &-liane {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 320px;
+    height: calc(100% + 64px);
+    z-index: -1;
+  }
+
+  &-blob1 {
+    @keyframes blob1 {
+      0% {
+        transform: rotate(45deg);
+      }
+      100% {
+        transform: rotate(25deg);
+      }
+    }
+
+    position: absolute;
+    bottom: -20px;
+    left: -180px;
+    width: 451px;
+    height: 517px;
+    animation: blob1 .5s;
+    transform: rotate(25deg);
+    transform-origin: center;
+    background: url('/assets/background/bg-1.svg') no-repeat top left / 100%;
+    z-index: -1;
+  }
+
+  &-blob2 {
+    @keyframes blob2 {
+      0% {
+        transform: translateY(-70px) rotate(-60deg);
+      }
+      100% {
+        transform: rotate(-50deg);
+      }
+    }
+
+    position: absolute;
+    bottom: 460px;
+    left: 150px;
+    width: 125px;
+    height: 209px;
+    animation: blob2 .5s;
+    transform: rotate(-50deg);
+    transform-origin: center;
+    background: url('/assets/background/bg-2.svg') no-repeat top left / 100%;
+    z-index: -1;
+  }
+}

@@ -1,15 +1,45 @@
 .pretty-button {
+  font-family: 'Roboto', sans-serif;
   border: none;
   display: inline-flex;
-  padding: 8px 12px;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
   border-radius: 24px;
-  font-size: 14px;
+  font-size: 16px;
   background: #00df81;
   text-decoration: none;
   transition: background .2s;
   color: #032221;
+  vertical-align: -2px;
 
   &:hover {
-    background: #00ad64;
+    background: #00be70;
+  }
+
+  :global(.pretty-button-icon) {
+    display: inline-flex;
+    padding: 2px;
+    background: #fff;
+    border-radius: 50%;
+    margin-left: -4px;
+    transition: transform .2s;
+  }
+
+  &:hover :global(.pretty-button-icon) {
+    transform: scale(1.1);
+  }
+
+  &.variant-secondary {
+    color: #fff;
+    background: #1e3c43;
+
+    :global(.pretty-button-icon) {
+      color: #032221;
+    }
+
+    &:hover {
+      background: #12282c;
+    }
   }
 }
