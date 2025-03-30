@@ -1,0 +1,49 @@
+.layout-nav {
+  height: 100%;
+}
+
+.layout-nav ul {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  height: 100%;
+}
+
+.layout-nav a {
+  color: inherit;
+  text-decoration: none;
+  user-select: none;
+
+  &.nav-link {
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: background .2s;
+
+    &.active {
+      background: #1e3c43;
+      pointer-events: none;
+    }
+
+    &:not(.active):hover {
+      background: #295059;
+    }
+  }
+
+  &.logo {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    line-height: 1;
+    padding: 0;
+
+    > img {
+      vertical-align: 1px;
+    }
+
+    > span {
+      padding-top: 4px;
+    }
+  }
+}

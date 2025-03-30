@@ -1,0 +1,15 @@
+.pretty-button {
+  border: none;
+  display: inline-flex;
+  padding: 8px 12px;
+  border-radius: 24px;
+  font-size: 14px;
+  background: #00df81;
+  text-decoration: none;
+  transition: background .2s;
+  color: #032221;
+
+  &:hover {
+    background: #00ad64;
+  }
+}

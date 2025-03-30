@@ -1,0 +1,51 @@
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 64px;
+  position: relative;
+  z-index: 0;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 100%;
+    background: url('/assets/bg-scene-1.svg') no-repeat top left / 100%;
+    z-index: -1;
+  }
+
+  &-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+    gap: 16px;
+  }
+
+  @keyframes appear {
+    0% {
+      transform: rotate(25deg);
+    }
+    100% {
+      transform: none;
+    }
+  }
+
+  img {
+    animation: appear .5s;
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-size: 36px;
+  }
+
+  p {
+    font-size: 18px;
+    text-align: center;
+    line-height: 1.5;
+  }
+}
