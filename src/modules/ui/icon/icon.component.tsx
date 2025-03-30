@@ -50,7 +50,7 @@ export default function Icon({ name, source = 'native', className, alt }: Props)
   const sourceClassName = source === 'material' ? 'material-icons-outlined' : '';
 
   return (
-    <ins
+    <i
       className={`${style['icon']} ${className} ${sourceClassName}`}
       dangerouslySetInnerHTML={{ __html: content }}
       aria-label={alt}

@@ -13,9 +13,9 @@ export default function LayoutNav() {
       </ActiveLink>
       <ul>
         <li>
-          <ActiveLink className={styles['nav-link']} href={'/manage'} activeClassName={styles['active']}>
+          <ActiveLink className={styles['nav-link']} href={'/add-liquidity'} activeClassName={styles['active']}>
             <Icon name="trade" />
-            Manage Liquidity
+            Add Liquidity
           </ActiveLink>
         </li>
         <li>

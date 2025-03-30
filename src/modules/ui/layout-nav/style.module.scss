@@ -44,7 +44,7 @@
     transition: background .2s, color .2s;
     color: #7bafb8;
 
-    ins {
+    i {
       font-size: 16px;
     }
 
@@ -60,7 +60,7 @@
     &.active {
       color: #fff;
 
-      ins {
+      i {
         color: #00BF58;
       }
     }

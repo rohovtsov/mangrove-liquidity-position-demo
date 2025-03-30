@@ -39,12 +39,12 @@ export default function NotFound() {
 
           <div className={styles['buttons-wrap']}>
             <PrettyButton href={'/'}>
-              <span className="pretty-button-icon"><Icon name="arrow_back" source="material" /></span>
+              <span className="pretty-button-icon prefix"><Icon name="arrow_back" source="material" /></span>
               Go Back
             </PrettyButton>
 
             <PrettyButton href={'/not-found'} variant="secondary">
-              <span className="pretty-button-icon"><Icon name="refresh" source="material" /></span>
+              <span className="pretty-button-icon prefix"><Icon name="refresh" source="material" /></span>
               Reload
             </PrettyButton>
           </div>
