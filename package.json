@@ -9,10 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "chart.js": "3.6.2",
     "next": "15.2.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-hook-form": "^7.55.0",
     "sass": "^1.86.0"
   },
   "devDependencies": {

@@ -4,3 +4,8 @@ export interface Token {
   symbol: string;
   icon: string;
 }
+
+export interface TokenPrice {
+  price: number;
+  timestamp: number;
+}
