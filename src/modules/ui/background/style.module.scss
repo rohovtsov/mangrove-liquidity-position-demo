@@ -18,21 +18,21 @@
     z-index: -1;
   }
 
-  &-blob1 {
-    @keyframes blob1 {
-      0% {
-        transform: rotate(45deg);
-      }
-      100% {
-        transform: rotate(25deg);
-      }
+  @keyframes blob1 {
+    0% {
+      transform: rotate(45deg);
     }
+    100% {
+      transform: rotate(25deg);
+    }
+  }
 
+  &-blob1 {
     position: absolute;
     bottom: -20px;
     left: -180px;
-    width: 451px;
-    height: 517px;
+    width: 450px;
+    height: 516px;
     animation: blob1 .5s;
     transform: rotate(25deg);
     transform-origin: center;
@@ -40,21 +40,21 @@
     z-index: -1;
   }
 
-  &-blob2 {
-    @keyframes blob2 {
-      0% {
-        transform: translateY(-70px) rotate(-60deg);
-      }
-      100% {
-        transform: rotate(-50deg);
-      }
+  @keyframes blob2 {
+    0% {
+      transform: translateY(-70px) rotate(-60deg);
     }
+    100% {
+      transform: rotate(-50deg);
+    }
+  }
 
+  &-blob2 {
     position: absolute;
     bottom: 460px;
     left: 150px;
     width: 125px;
-    height: 209px;
+    height: 210px;
     animation: blob2 .5s;
     transform: rotate(-50deg);
     transform-origin: center;

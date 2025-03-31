@@ -1,6 +1,7 @@
 import style from "./page.module.scss";
 import PrettyButton from '@/modules/ui/pretty-button/pretty-button.component';
 import Icon from '@/modules/ui/icon/icon.component';
+import { randomStr } from '@/modules/utils/random';
 
 export default function Home() {
   return (
@@ -11,9 +12,9 @@ export default function Home() {
           Create Liquidity Position
           <span className="pretty-button-icon postfix"><Icon name="add" source="material"/></span>
         </PrettyButton>
-        <PrettyButton href="/not-found" variant="secondary">
+        <PrettyButton href={`/not-found-${randomStr(10)}`} variant="secondary">
           Check out 404
-          <span className="pretty-button-icon postfix"><Icon name="error_outline" source="material"/></span>
+          <span className="pretty-button-icon postfix"><Icon name="search" source="material"/></span>
         </PrettyButton>
       </div>
     </div>

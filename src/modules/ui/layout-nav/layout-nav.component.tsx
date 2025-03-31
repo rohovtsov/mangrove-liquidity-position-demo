@@ -3,6 +3,7 @@ import Image from 'next/image';
 import styles from './style.module.scss';
 import Link from 'next/link';
 import Icon from '@/modules/ui/icon/icon.component';
+import { randomStr } from '@/modules/utils/random';
 
 export default function LayoutNav() {
   return (
@@ -19,7 +20,7 @@ export default function LayoutNav() {
           </ActiveLink>
         </li>
         <li>
-          <Link className={styles['nav-link']} href={'/not-found'}>
+          <Link className={styles['nav-link']} href={`/not-found-${randomStr(10)}`}>
             <Icon name="search" source="material" className={styles['icon-search']} />
             Check out 404
           </Link>

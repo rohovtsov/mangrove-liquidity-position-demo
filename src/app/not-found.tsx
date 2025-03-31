@@ -1,19 +1,17 @@
 import styles from "./not-found.module.scss";
 import LaggingText from '@/modules/ui/lagging-text/lagging-text.component';
-import Image from 'next/image';
 import PrettyButton from '@/modules/ui/pretty-button/pretty-button.component';
 import Icon from '@/modules/ui/icon/icon.component';
 import Background from '@/modules/ui/background/background.component';
+import { randomStr } from '@/modules/utils/random';
+import NotFoundImage from '@/modules/ui/not-found-image/not-found-image.component';
 
 export default function NotFound() {
-  const images = ['stork', 'parrot', 'heron'];
-  const image = images[Math.floor(Math.random() * images.length)];
-
   return (
     <div className={`${styles['page']} slide-animation`}>
       <div className="container">
         <div className={`${styles['page-inner']}`}>
-          <Image src={`/assets/${image}.svg`} alt="404 Image" width={200} height={140}/>
+          <NotFoundImage className={styles['image']} />
 
           <h1>
             <LaggingText texts={[
@@ -43,7 +41,7 @@ export default function NotFound() {
               Go Back
             </PrettyButton>
 
-            <PrettyButton href={'/not-found'} variant="secondary">
+            <PrettyButton href={`/not-found-${randomStr(10)}`} variant="secondary">
               <span className="pretty-button-icon prefix"><Icon name="refresh" source="material" /></span>
               Reload
             </PrettyButton>
