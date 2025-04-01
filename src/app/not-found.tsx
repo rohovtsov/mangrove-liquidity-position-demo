@@ -48,7 +48,7 @@ export default function NotFound() {
           </div>
         </div>
       </div>
-      <Background variant="404"/>
+      <Background variant="full-fancy"/>
     </div>
   );
 }

@@ -2,7 +2,7 @@ import style from './style.module.scss';
 import Liane from '@/modules/ui/background/liane/liane.component';
 
 interface Props {
-  variant: '404';
+  variant: 'full-fancy' | 'mild-fancy';
 }
 
 export default function Background({ variant }: Props) {

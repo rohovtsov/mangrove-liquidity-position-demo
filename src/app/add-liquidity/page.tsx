@@ -2,6 +2,7 @@ import styles from "./page.module.scss";
 import TokenPairForm from '@/modules/liquidity/ui/token-pair-form/token-pair-form.component';
 import API from '@/modules/api';
 import PriceChart from '@/modules/liquidity/ui/price-chart/price-chart.component';
+import Background from '@/modules/ui/background/background.component';
 
 export default async function AddLiquidity() {
   const tokens = await API.getTokens();
@@ -21,6 +22,7 @@ export default async function AddLiquidity() {
           </div>
         </div>
       </div>
+      <Background variant="mild-fancy"/>
     </div>
   );
 }
