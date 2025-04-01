@@ -51,5 +51,9 @@ export function useAddLiquidityState(tokens: Token[]): Result {
     setSubmitData(null);
   }, []);
 
-  return { baseToken, quoteToken, setBaseToken, setQuoteToken, nAsk, nBid, setNAsk, setNBid, quoteAmount, baseAmount, setQuoteAmount, setBaseAmount, submitData, clearSubmit, handleSubmit, ...chartState };
+  return {
+    baseToken, quoteToken, setBaseToken, setQuoteToken, nAsk, nBid, setNAsk, setNBid,
+    quoteAmount, baseAmount, setQuoteAmount, setBaseAmount, submitData, clearSubmit,
+    handleSubmit, ...chartState
+  };
 }

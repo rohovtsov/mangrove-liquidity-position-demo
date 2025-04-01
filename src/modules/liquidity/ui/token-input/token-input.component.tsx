@@ -16,10 +16,16 @@ interface Props {
 
 export default function TokenInput({value, label, onChange, selectedToken, setSelectedToken, tokens}: Props) {
   const [inputValue, setInputValue] = useState(bigintToString(value, selectedToken.decimals));
+  const [prevToken, setPrevToken] = useState<Token | null>(null);
 
   useEffect(() => {
+    if (prevToken && prevToken !== selectedToken) {
+      onChange(stringToBigint(bigintToString(value, prevToken.decimals), selectedToken.decimals));
+    }
+
     setInputValue(bigintToString(value, selectedToken.decimals));
-  }, [value, selectedToken]);
+    setPrevToken(selectedToken);
+  }, [onChange, prevToken, selectedToken, value]);
 
   const handleInputBlur = () => {
     setInputValue(bigintToString(stringToBigint(inputValue, selectedToken.decimals), selectedToken.decimals));
@@ -38,9 +44,7 @@ export default function TokenInput({value, label, onChange, selectedToken, setSe
   };
 
   const handleSelectChange = (newToken: Token) => {
-    const newValue = stringToBigint(bigintToString(value, selectedToken.decimals), newToken.decimals);
     setSelectedToken(newToken);
-    onChange(newValue);
   }
 
   return (
