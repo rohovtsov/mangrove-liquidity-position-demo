@@ -1,5 +1,5 @@
 import Chart from 'chart.js/auto';
-import { TokenPrice } from '@/modules/api/entities';
+import { LiquidityEntry, TokenPrice } from '@/modules/api/entities';
 
 const backgroundGradientColor = ({ chart }: { chart: Chart }) => {
   const gradient = chart.ctx.createLinearGradient(
@@ -72,22 +72,28 @@ export function registerChartJsTokenPrices(prices: TokenPrice[], canvas: HTMLCan
           },
         },
       },
+      layout: {
+        autoPadding: false,
+        padding: {
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+        },
+      },
     },
   });
 }
 
-export function registerChartJsLiquidityDistribution(prices: TokenPrice[], canvas: HTMLCanvasElement): Chart {
+export function registerChartJsLiquidityDistribution(liquidity: LiquidityEntry[], canvas: HTMLCanvasElement): Chart {
   return new Chart(canvas, {
     type: 'bar',
     data: {
-      labels: prices.map(price => new Date(price.timestamp).toLocaleDateString(undefined, {
-        day: '2-digit',
-        month: 'short'
-      })),
+      labels: liquidity.map(item => item.price),
       datasets: [
         {
           pointStyle: 'circle',
-          data: prices.map(price => price.price),
+          data: liquidity.map(item => item.liquidity),
           borderColor: '#00BF58',
           backgroundColor: backgroundGradientColor,
         },
@@ -111,7 +117,7 @@ export function registerChartJsLiquidityDistribution(prices: TokenPrice[], canva
       scales: {
         x: {
           ticks: {
-            maxTicksLimit: 1,
+            maxTicksLimit: 5,
             maxRotation: 0,
             minRotation: 0,
             color: 'transparent',
@@ -129,21 +135,30 @@ export function registerChartJsLiquidityDistribution(prices: TokenPrice[], canva
             display: false,
             drawBorder: false,
           },
-          offset: false,
+          reverse: true,
+        },
+      },
+      layout: {
+        autoPadding: false,
+        padding: {
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
         },
       },
     },
   });
 }
 
-export function updateChartMinMaxY(chart: Chart, min: number, max: number) {
+export function updateChartMinMax(target: 'x' | 'y', chart: Chart, min: number, max: number) {
   chart.options.scales = {
     ...chart.options.scales,
-    y: {
-      ...chart.options.scales?.y,
+    [target]: {
+      ...chart.options.scales?.[target],
       min,
       max,
     },
   };
-  chart.update('normal');
+  chart.update();
 }

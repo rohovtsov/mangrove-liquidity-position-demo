@@ -1,9 +1,10 @@
 import { getTokens } from '@/modules/api/tokens';
-import { getTokensHistoricalPrice } from '@/modules/api/historical';
+import { getTokensHistoricalPrice, getTokensLiquidityDistribution } from '@/modules/api/price';
 
 const API = {
   getTokens,
   getTokensHistoricalPrice,
+  getTokensLiquidityDistribution,
 };
 
 export default API;

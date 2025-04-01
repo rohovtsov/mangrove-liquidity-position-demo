@@ -6,13 +6,14 @@ import PriceChart from '@/modules/liquidity/ui/price-chart/price-chart.component
 export default async function AddLiquidity() {
   const tokens = await API.getTokens();
   const prices = await API.getTokensHistoricalPrice();
+  const liquidity = await API.getTokensLiquidityDistribution(prices);
 
   return (
     <div className={`${styles.page} slide-animation`}>
       <div className="container">
         <h1>Add Liquidity Position</h1>
         <TokenPairForm tokens={tokens} />
-        <PriceChart prices={prices} />
+        <PriceChart prices={prices} liquidity={liquidity} />
       </div>
     </div>
   );

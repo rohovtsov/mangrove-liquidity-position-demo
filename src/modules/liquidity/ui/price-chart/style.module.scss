@@ -2,8 +2,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 1000px;
-  height: 400px;
+  width: 100%;
+  height: 420px;
   position: relative;
   z-index: 0;
 
@@ -11,28 +11,46 @@
     width: 100%;
     height: 100%;
   }
+
+  &.locked {
+    pointer-events: none;
+  }
 }
 
 .price-chart {
-  width: 750px;
-  height: 400px;
+  width: 75%;
+  height: 100%;
 }
 
 .liquidity-chart {
-  width: 250px;
-  height: 400px;
+  width: 25%;
+  height: 100%;
 }
 
 .chart-range-wrap {
   position: absolute;
-  top: 0;
+  top: 10px;
   left: 45px;
   right: 0;
   bottom: 28px;
   z-index: 1;
 }
 
+@keyframes chart-range-appear {
+  0% {
+    top: 0;
+    bottom: 0;
+    opacity: 0;
+  }
+  100% {
+    top: calc((1 - var(--max)) * 100%);
+    bottom: calc(var(--min) * 100%);
+    opacity: 1;
+  }
+}
+
 .chart-range {
+  animation: chart-range-appear .5s;
   position: absolute;
   top: calc((1 - var(--max)) * 100%);
   left: 0;
@@ -42,6 +60,19 @@
   background: rgba(18, 40, 44, 0.35);
   border-top: 2px solid #7bafb8;
   border-bottom: 2px solid #7bafb8;
+  transition: border-color .1s;
+
+  &:not(.grabbing) {
+    transition: top .5s ease, bottom .5s ease, border-color .1s;
+  }
+
+  &.grabbing-max {
+    border-top-color: #fff;
+  }
+
+  &.grabbing-min {
+    border-bottom-color: #fff;
+  }
 
   &-toggle {
     display: inline-flex;
@@ -55,11 +86,12 @@
     padding: 4px 8px;
     font-size: 14px;
     user-select: none;
+    transition: background-color .1s;
     cursor: grab;
 
     &.grabbing {
       cursor: grabbing;
-      color: #fff;
+      background: #fff;
     }
 
     i {

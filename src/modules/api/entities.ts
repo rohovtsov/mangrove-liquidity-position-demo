@@ -9,3 +9,8 @@ export interface TokenPrice {
   price: number;
   timestamp: number;
 }
+
+export interface LiquidityEntry {
+  price: number;
+  liquidity: number;
+}
