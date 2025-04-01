@@ -1,9 +1,6 @@
 import { Token } from '@/modules/api/entities';
-import { wait } from '@/modules/utils/promise';
 
 export async function getTokens(): Promise<Token[]> {
-  await wait(250);
-
   return [
     {
       address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',

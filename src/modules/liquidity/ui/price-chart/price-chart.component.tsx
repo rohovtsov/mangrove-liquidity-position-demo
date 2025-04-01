@@ -8,21 +8,24 @@ import {
   registerChartJsTokenPrices,
   updateChartMinMax
 } from '@/modules/liquidity/ui/price-chart/chartjs';
-import { useRange } from '@/modules/liquidity/ui/price-chart/range';
+import { useChartRange } from '@/modules/liquidity/ui/price-chart/chart-range';
 import Chart from 'chart.js/auto';
+import { SetMinMaxStateFn, MinMaxState } from '@/modules/liquidity/state/min-max-state';
 
 interface Props {
   prices: TokenPrice[];
   liquidity: LiquidityEntry[];
+  minMax: MinMaxState;
+  setMinMax: SetMinMaxStateFn;
 }
 
-export default function PriceChart({ prices, liquidity }: Props) {
+export default function PriceChart({ prices, liquidity, minMax, setMinMax }: Props) {
   const canvasPriceRef = useRef<HTMLCanvasElement | null>(null);
   const canvasLiquidityRef = useRef<HTMLCanvasElement | null>(null);
   const rangeRootRef = useRef<HTMLDivElement | null>(null);
   const [chartPrice, setChartPrice] = useState<Chart | null>(null);
   const [chartLiquidity, setChartLiquidity] = useState<Chart | null>(null);
-  const { min, max, rangeMin, rangeMax, currentPrice, grabbing, setGrabbing, locked } = useRange(prices, liquidity[liquidity.length - 1].price - 1, rangeRootRef);
+  const { min, max, rangeMin, rangeMax, currentPrice, grabbing, setGrabbing, locked, liquidityScale } = useChartRange(prices, minMax, setMinMax, rangeRootRef);
 
   useEffect(() => {
     if (!canvasPriceRef.current || !canvasLiquidityRef.current || !prices.length || !liquidity.length) {
@@ -45,10 +48,9 @@ export default function PriceChart({ prices, liquidity }: Props) {
       return;
     }
 
-    const scale = (liquidity?.[1]?.price ?? 1) - (liquidity?.[0]?.price ?? 0);
     updateChartMinMax('y',chartPrice, min, max);
-    updateChartMinMax('y', chartLiquidity, min / scale, max / scale);
-  }, [min, max, chartPrice, chartLiquidity, liquidity]);
+    updateChartMinMax('y', chartLiquidity, min / liquidityScale, max / liquidityScale);
+  }, [min, max, chartPrice, chartLiquidity, liquidityScale]);
 
   const maxRel = ((rangeMax / currentPrice - 1) * 100).toFixed(2);
   const minRel = ((rangeMin / currentPrice - 1) * 100).toFixed(2);

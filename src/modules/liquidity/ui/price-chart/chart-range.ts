@@ -1,21 +1,18 @@
 import { TokenPrice } from '@/modules/api/entities';
 import { RefObject, useEffect, useMemo, useState } from 'react';
 import { clamp } from '@/modules/utils/math';
+import { MinMaxState, SetMinMaxStateFn } from '@/modules/liquidity/state/min-max-state';
 
 type Grabbing = 'min' | 'max' | null;
 type GrabbingState = { grabbing: Grabbing; offsetRel: number; };
 type RangeRootRef = RefObject<HTMLDivElement | null>;
 
-interface Result {
+type Result = {
   setGrabbing: (grabbing: Grabbing) => void;
   grabbing: Grabbing;
   currentPrice: number;
-  min: number;
-  max: number;
-  rangeMin: number;
-  rangeMax: number;
   locked: boolean;
-}
+} & MinMaxState;
 
 function applyGrab(grabbing: Grabbing, offsetRel: number, min: number, max: number, rangeMin: number, rangeMax: number): number {
   if (grabbing === 'min') {
@@ -24,6 +21,34 @@ function applyGrab(grabbing: Grabbing, offsetRel: number, min: number, max: numb
     return clamp(rangeMax + (offsetRel * (max - min)), rangeMin, max);
   } else {
     throw new Error('Invalid grabbing');
+  }
+}
+
+function applyLastGrab(lastGrab: GrabbingState, grabbingOffsetRel: number, minMax: MinMaxState): Partial<MinMaxState> {
+  let actualRangeMin: number | null = null;
+  let actualRangeMax: number | null = null;
+  let centerRange = 0;
+  let newRange = 0;
+
+  if (lastGrab.grabbing === 'max') {
+    actualRangeMax = applyGrab('max', grabbingOffsetRel, minMax.min, minMax.max, minMax.rangeMin, minMax.rangeMax);
+    newRange = (actualRangeMax - minMax.rangeMin);
+    centerRange = (minMax.rangeMin + actualRangeMax) / 2;
+  } else if (lastGrab.grabbing === 'min') {
+    actualRangeMin = applyGrab('min', grabbingOffsetRel, minMax.min, minMax.max, minMax.rangeMin, minMax.rangeMax);
+    newRange = (minMax.rangeMax - actualRangeMin);
+    centerRange = (minMax.rangeMax + actualRangeMin) / 2;
+  }
+
+  const newMax = Math.min(centerRange + newRange / 0.66 / 2, minMax.absoluteMax);
+  const newMin = Math.max(centerRange - newRange / 0.66 / 2, minMax.absoluteMin);
+
+  if (actualRangeMax) {
+    return { min: newMin, max: newMax, rangeMax: actualRangeMax };
+  } else if (actualRangeMin) {
+    return { min: newMin, max: newMax, rangeMin: actualRangeMin };
+  } else {
+    throw new Error('Invalid range');
   }
 }
 
@@ -99,61 +124,30 @@ function useGrabbing(rangeRootRef: RangeRootRef): [Grabbing, (grabbing: Grabbing
   return [grabbing, setGrabbing, relativeOffset, lastGrab];
 }
 
-export function useRange(prices: TokenPrice[], absoluteMax: number, rangeRootRef: RangeRootRef): Result {
+export function useChartRange(prices: TokenPrice[], minMax: MinMaxState, setMinMax: SetMinMaxStateFn, rangeRootRef: RangeRootRef): Result {
   const [locked, setLocked] = useLockedState(500);
-  const minPrice = useMemo(() => prices.reduce((min, price) => Math.min(min, price.price), Infinity), [prices]);
-  const maxPrice = useMemo(() => prices.reduce((max, price) => Math.max(max, price.price), -Infinity), [prices]);
   const currentPrice = useMemo(() => prices[prices.length - 1].price, [prices]);
   const [grabbing, setGrabbing, grabbingOffsetRel, lastGrab] = useGrabbing(rangeRootRef);
 
-  const [min, setMin] = useState(Math.max(currentPrice - (maxPrice - minPrice), 0));
-  const [max, setMax] = useState(Math.min(currentPrice + (maxPrice - minPrice), absoluteMax));
-
-  const [rangeMin, setRangeMin] = useState(currentPrice - (currentPrice - min) * 0.66);
-  const [rangeMax, setRangeMax] = useState(currentPrice + (max - currentPrice) * 0.66);
-
-  const actualRangeMin = grabbing === 'min' ? applyGrab('min', grabbingOffsetRel, min, max, rangeMin, rangeMax) : rangeMin;
-  const actualRangeMax = grabbing === 'max' ? applyGrab('max', grabbingOffsetRel, min, max, rangeMin, rangeMax) : rangeMax;
+  const actualRangeMin = grabbing === 'min' ? applyGrab('min', grabbingOffsetRel, minMax.min, minMax.max, minMax.rangeMin, minMax.rangeMax) : minMax.rangeMin;
+  const actualRangeMax = grabbing === 'max' ? applyGrab('max', grabbingOffsetRel, minMax.min, minMax.max, minMax.rangeMin, minMax.rangeMax) : minMax.rangeMax;
 
   useEffect(() => {
     if (grabbing !== null || lastGrab === null) {
       return;
     }
 
-    if (lastGrab.grabbing === 'max') {
-      const actualRangeMax = applyGrab('max', grabbingOffsetRel, min, max, rangeMin, rangeMax);
-      setLocked(true);
-
-      const newRange = (actualRangeMax - rangeMin);
-      const centerRange = (rangeMin + actualRangeMax) / 2;
-      const newMax = centerRange + newRange / 0.66 / 2;
-      const newMin = centerRange - newRange / 0.66 / 2;
-
-      setMin(Math.max(newMin, 0));
-      setMax(Math.min(newMax, absoluteMax));
-      setRangeMax(actualRangeMax);
-    } else if (lastGrab.grabbing === 'min') {
-      const actualRangeMin = applyGrab('min', grabbingOffsetRel, min, max, rangeMin, rangeMax);
-      setLocked(true);
-      const newRange = (rangeMax - actualRangeMin);
-      const centerRange = (rangeMax + actualRangeMin) / 2;
-      const newMax = centerRange + newRange / 0.66 / 2;
-      const newMin = centerRange - newRange / 0.66 / 2;
-
-      setMin(Math.max(newMin, 0));
-      setMax(Math.min(newMax, absoluteMax));
-      setRangeMin(actualRangeMin);
-    }
+    setLocked(true);
+    setMinMax(applyLastGrab(lastGrab, grabbingOffsetRel, minMax));
   }, [grabbing, lastGrab]);
 
   return {
+    ...minMax,
+    rangeMin: actualRangeMin,
+    rangeMax: actualRangeMax,
     setGrabbing,
     grabbing,
     currentPrice,
-    min,
-    max,
-    rangeMin: actualRangeMin,
-    rangeMax: actualRangeMax,
     locked,
   };
 }

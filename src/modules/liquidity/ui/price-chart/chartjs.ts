@@ -152,13 +152,15 @@ export function registerChartJsLiquidityDistribution(liquidity: LiquidityEntry[]
 }
 
 export function updateChartMinMax(target: 'x' | 'y', chart: Chart, min: number, max: number) {
-  chart.options.scales = {
-    ...chart.options.scales,
-    [target]: {
-      ...chart.options.scales?.[target],
-      min,
-      max,
-    },
-  };
-  chart.update();
+  try {
+    chart.options.scales = {
+      ...chart.options.scales,
+      [target]: {
+        ...chart.options.scales?.[target],
+        min,
+        max,
+      },
+    };
+    chart.update();
+  } catch {}
 }

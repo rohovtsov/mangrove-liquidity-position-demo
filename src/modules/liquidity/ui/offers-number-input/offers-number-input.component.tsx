@@ -1,6 +1,6 @@
 'use client';
 import style from './style.module.scss';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useCallback } from 'react';
 
 interface Props {
   label: string;
@@ -9,9 +9,10 @@ interface Props {
 }
 
 export default function OffersNumberInput({value, label, onChange}: Props) {
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    onChange(Number(event.target.value));
-  };
+  const handleInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    const n = Number(event.target.value);
+    onChange(n);
+  }, [onChange]);
 
   return (
     <label className={style['offers-input']}>
