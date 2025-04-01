@@ -109,7 +109,7 @@ function useGrabbing(rangeRootRef: RangeRootRef): [Grabbing, (grabbing: Grabbing
       setOffset(0);
       setRootHeight(0);
     };
-  }, [grabbing]);
+  }, [grabbing, rangeRootRef]);
 
   useEffect(() => {
     document.body.classList.toggle('grabbing', grabbing !== null);
@@ -119,7 +119,7 @@ function useGrabbing(rangeRootRef: RangeRootRef): [Grabbing, (grabbing: Grabbing
     if (grabbing !== null) {
       setLastGrab({ grabbing, offsetRel: relativeOffset });
     }
-  }, [grabbing, offset]);
+  }, [grabbing, relativeOffset]);
 
   return [grabbing, setGrabbing, relativeOffset, lastGrab];
 }
@@ -139,6 +139,7 @@ export function useChartRange(prices: TokenPrice[], minMax: MinMaxState, setMinM
 
     setLocked(true);
     setMinMax(applyLastGrab(lastGrab, grabbingOffsetRel, minMax));
+    // eslint-disable-next-line
   }, [grabbing, lastGrab]);
 
   return {
