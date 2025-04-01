@@ -92,6 +92,11 @@ $gap: 4px;
     user-select: none;
     transition: background-color .1s;
     cursor: grab;
+    font-weight: 600;
+
+    &:hover {
+      background: #90cad5;
+    }
 
     &.grabbing {
       cursor: grabbing;
@@ -101,6 +106,19 @@ $gap: 4px;
     i {
       font-size: 16px !important;
       margin-left: -4px;
+    }
+
+    ins {
+      text-decoration: none;
+      margin-left: 4px;
+
+      &.positive {
+        color: #00723f;
+      }
+
+      &.negative {
+        color: #b62626;
+      }
     }
 
     &.max {

@@ -52,8 +52,8 @@ export default function PriceChart({ prices, liquidity, minMax, setMinMax }: Pro
     updateChartMinMax('y', chartLiquidity, min / liquidityScale, max / liquidityScale);
   }, [min, max, chartPrice, chartLiquidity, liquidityScale]);
 
-  const maxRel = ((rangeMax / currentPrice - 1) * 100).toFixed(2);
-  const minRel = ((rangeMin / currentPrice - 1) * 100).toFixed(2);
+  const maxRel = Number(((rangeMax / currentPrice - 1) * 100).toFixed(2));
+  const minRel = Number(((rangeMin / currentPrice - 1) * 100).toFixed(2));
 
   const rangeMinRel = (rangeMin - min) / (max - min);
   const rangeMaxRel = (rangeMax - min) / (max - min);
@@ -76,14 +76,20 @@ export default function PriceChart({ prices, liquidity, minMax, setMinMax }: Pro
             onMouseDown={() => setGrabbing('max')}
           >
             <Icon name="drag_indicator" source="material" />
-            Max {rangeMax.toFixed(2)}, {Number(maxRel) > 0 ? '+' : ''}{maxRel}%
+            Max {rangeMax.toFixed(2)}
+            <ins className={`${maxRel > 0 ? style['positive'] : maxRel < 0 ? style['negative'] : ''}`}>
+              {maxRel > 0 ? '+' : ''}{maxRel}%
+            </ins>
           </div>
           <div
             className={`${style['chart-range-toggle']} ${style['min']} ${grabbing === 'min' ? style['grabbing'] : ''}`}
             onMouseDown={() => setGrabbing('min')}
           >
             <Icon name="drag_indicator" source="material" />
-            Min {rangeMin.toFixed(2)}, {Number(minRel) > 0 ? '+' : ''}{minRel}%
+            Min {rangeMin.toFixed(2)}
+            <ins className={`${minRel > 0 ? style['positive'] : minRel < 0 ? style['negative'] : ''}`}>
+              {minRel > 0 ? '+' : ''}{minRel}%
+            </ins>
           </div>
         </div>
       </div>
