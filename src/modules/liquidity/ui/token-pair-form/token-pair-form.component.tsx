@@ -24,9 +24,10 @@ interface Props {
   setBaseAmount: (n: bigint) => void;
   minMax: MinMaxState;
   setMinMax: SetMinMaxStateFn;
+  handleSubmit: () => void;
 }
 
-export default function TokenPairForm({ tokens, baseToken, quoteToken, setBaseToken, setQuoteToken, nAsk, nBid, setNBid, setNAsk, quoteAmount, baseAmount, setQuoteAmount, setBaseAmount, minMax, setMinMax }: Props) {
+export default function TokenPairForm({ tokens, baseToken, quoteToken, setBaseToken, setQuoteToken, nAsk, nBid, setNBid, setNAsk, quoteAmount, baseAmount, setQuoteAmount, setBaseAmount, minMax, setMinMax, handleSubmit }: Props) {
   return (
     <div className={style['pair-form']}>
       <div className={style['input']}>
@@ -41,7 +42,7 @@ export default function TokenPairForm({ tokens, baseToken, quoteToken, setBaseTo
         <NumberInput label="Min Price" value={Number(minMax.rangeMin.toFixed(2))} onChange={(n) => setMinMax(applyRangeMinMaxChange('min', n, minMax))} />
         <NumberInput label="Max Price" value={Number(minMax.rangeMax.toFixed(2))} onChange={(n) => setMinMax(applyRangeMinMaxChange('max', n, minMax))} />
       </div>
-      <PrettyButton size={'large'}>
+      <PrettyButton size={'large'} onClick={() => handleSubmit()}>
         Create Position
         <span className="pretty-button-icon postfix"><Icon name="arrow_forward" source="material"/></span>
       </PrettyButton>

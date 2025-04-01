@@ -5,6 +5,7 @@ import PriceChart from '@/modules/liquidity/ui/price-chart/price-chart.component
 import Background from '@/modules/ui/background/background.component';
 import { Token } from '@/modules/api/entities';
 import { useAddLiquidityState } from '@/modules/liquidity/state/state';
+import SubmitPopup from '@/modules/liquidity/ui/submit-popup/submit-popup.component';
 
 interface Props {
   tokens: Token[];
@@ -31,6 +32,7 @@ export default function AddLiquidityClient({ tokens }: Props) {
         </div>
       </div>
       <Background variant="mild-fancy"/>
+      <SubmitPopup {...state} />
     </div>
   );
 }
