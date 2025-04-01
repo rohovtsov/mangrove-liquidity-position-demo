@@ -11,9 +11,15 @@ export default async function AddLiquidity() {
   return (
     <div className={`${styles.page} slide-animation`}>
       <div className="container">
-        <h1>Add Liquidity Position</h1>
-        <TokenPairForm tokens={tokens} />
-        <PriceChart prices={prices} liquidity={liquidity} />
+        <h1>Create Liquidity Position</h1>
+        <div className={styles['islands-wrap']}>
+          <div className={`${styles['island']} ${styles['island-pair']}`}>
+            <TokenPairForm tokens={tokens} />
+          </div>
+          <div className={`${styles['island']} ${styles['island-chart']}`}>
+            <PriceChart prices={prices} liquidity={liquidity} />
+          </div>
+        </div>
       </div>
     </div>
   );

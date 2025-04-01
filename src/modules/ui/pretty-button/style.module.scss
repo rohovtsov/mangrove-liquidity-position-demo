@@ -3,9 +3,10 @@
   border: none;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   padding: 10px 16px;
-  border-radius: 24px;
+  border-radius: 36px;
   font-size: 16px;
   background: #00df81;
   text-decoration: none;
@@ -48,5 +49,10 @@
     &:hover {
       background: #12282c;
     }
+  }
+
+  &.size-large {
+    padding: 16px 24px;
+    font-size: 18px;
   }
 }

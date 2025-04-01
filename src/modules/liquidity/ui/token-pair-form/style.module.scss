@@ -2,5 +2,20 @@
   display: flex;
   flex-flow: column;
   gap: 16px;
-  width: 420px;
+  width: 100%;
+
+  .input {
+    position: relative;
+
+    &:first-child {
+      z-index: 2;
+    }
+  }
+
+  .inputs-wrap {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 16px;
+  }
 }

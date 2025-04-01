@@ -1,18 +1,17 @@
-.token-input {
+.offers-input {
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
   border-radius: 12px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
   width: 100%;
   gap: 8px;
-  padding: 16px;
+  padding: 4px 16px 8px;
   border: 2px solid transparent;
   transition: border-color 0.1s;
-  background: #12282c;
+  background: #1e3c43;
   position: relative;
-  z-index: 1;
 
   &-inner {
     display: flex;
@@ -34,9 +33,8 @@
     margin: 0;
     padding: 0;
     outline: none;
-    height: 36px;
     width: 100%;
-    font-size: 24px;
+    font-size: 18px;
     color: inherit;
     background: transparent;
 
