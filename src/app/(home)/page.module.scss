@@ -1,3 +1,5 @@
+@use "@/mixins/app";
+
 .page {
   display: flex;
   align-items: center;
@@ -57,7 +59,8 @@
   display: flex;
   padding: 16px;
   border-radius: 16px;
-  width: 1024px;
+  width: 100%;
+  max-width: 1024px;
   margin-top: 100px;
   background: #12282c;
   position: relative;
@@ -77,5 +80,59 @@
     right: 0;
     border-radius: inherit;
     background: linear-gradient(180deg, rgba(11, 23, 25, 0) 0%, #0b1719 100%);
+  }
+}
+
+@include app.media-below(app.$viewport-laptop) {
+  .page {
+    padding: 128px 0 64px;
+
+    .screenshot {
+      margin-top: 80px;
+    }
+  }
+}
+
+@include app.media-below(app.$viewport-tablet) {
+  .page {
+    &-inner {
+      h1 {
+        font-size: 52px;
+      }
+    }
+  }
+}
+
+@include app.media-below(app.$viewport-mobile) {
+  .page {
+    padding: 96px 0;
+
+    &-inner {
+      h1 {
+        font-size: 42px;
+      }
+
+      p {
+        font-size: 14px;
+        max-width: 420px;
+        margin-bottom: 24px;
+      }
+    }
+
+    .screenshot {
+      display: none;
+    }
+
+    .buttons-wrap {
+      flex-flow: column;
+      max-width: 320px;
+      gap: 12px;
+      margin-left: auto;
+      margin-right: auto;
+
+      a {
+        width: 100%;
+      }
+    }
   }
 }

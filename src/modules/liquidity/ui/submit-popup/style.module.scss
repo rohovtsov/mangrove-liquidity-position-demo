@@ -1,3 +1,5 @@
+@use "@/mixins/app";
+
 .submit-popup {
   position: fixed;
   top: 0;
@@ -36,7 +38,8 @@
     background: #12282c;
     border-radius: 18px;
     padding: 32px;
-    width: 480px;
+    width: calc(100% - 48px);
+    max-width: 480px;
     z-index: 1;
     transition: opacity .3s, transform .4s;
 
@@ -53,5 +56,17 @@
     overflow: hidden;
     font-size: 14px;
     font-family: "Roboto Mono", monospace;
+  }
+}
+
+@include app.media-below(app.$viewport-mobile) {
+  .submit-popup {
+    &-inner {
+      padding: 24px;
+    }
+
+    &-data {
+      padding: 8px;
+    }
   }
 }

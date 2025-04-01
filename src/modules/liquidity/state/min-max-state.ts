@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { LiquidityEntry, TokenPrice } from '@/modules/api/entities';
 import { clamp } from '@/modules/utils/math';
 
@@ -16,7 +16,7 @@ export type SetMinMaxStateFn = (partial: Partial<MinMaxState>) => void;
 
 export function useMinMaxState(): [MinMaxState, SetMinMaxStateFn] {
   const [state, setState] = useState<MinMaxState>({ min: 0, max: 0, rangeMin: 0, rangeMax: 0, absoluteMax: 0, absoluteMin: 0, liquidityScale: 0 });
-  const setPartialState = (partial: Partial<MinMaxState>) => setState(prev => ({ ...prev, ...partial }));
+  const setPartialState = useCallback((partial: Partial<MinMaxState>) => setState(prev => ({ ...prev, ...partial })), []);
 
   return [state, setPartialState];
 }

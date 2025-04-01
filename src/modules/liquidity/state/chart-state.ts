@@ -37,7 +37,7 @@ export function useChartState(base: Token, quote: Token): ChartStateResult {
     return () => {
       isCancelled = true;
     };
-  }, [base, quote]);
+  }, [base, quote, setMinMax]);
 
   return {
     prices: data?.prices ?? null,

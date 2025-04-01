@@ -1,3 +1,5 @@
+@use '@/mixins/app';
+
 .pretty-button {
   font-family: 'Roboto', sans-serif;
   border: none;
@@ -54,5 +56,10 @@
   &.size-large {
     padding: 14px 32px;
     font-size: 18px;
+
+    @include app.media-below(app.$viewport-mobile) {
+      padding: 10px 16px;
+      font-size: 16px;
+    }
   }
 }

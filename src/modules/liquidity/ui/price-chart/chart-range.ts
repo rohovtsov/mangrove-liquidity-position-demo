@@ -61,7 +61,7 @@ function useLockedState(ms: number): [boolean, (locked: boolean) => void] {
     }
     const timeoutId = setTimeout(() => setLocked(false), ms);
     return () => clearTimeout(timeoutId);
-  }, [locked]);
+  }, [locked, ms]);
 
   return [locked, setLocked];
 }

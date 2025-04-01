@@ -1,3 +1,5 @@
+@use "sass:math";
+
 $gap: 4px;
 
 .chart {
@@ -22,12 +24,12 @@ $gap: 4px;
 }
 
 .price-chart {
-  width: calc(75% - #{$gap / 2});
+  width: calc(75% - #{math.div($gap, 2)});
   height: 100%;
 }
 
 .liquidity-chart {
-  width: calc(25% - #{$gap / 2});
+  width: calc(25% - #{math.div($gap, 2)});
   height: 100%;
 }
 

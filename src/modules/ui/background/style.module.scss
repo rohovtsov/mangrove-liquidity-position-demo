@@ -1,3 +1,5 @@
+@use "@/mixins/app";
+
 .background {
   position: absolute;
   z-index: -1;
@@ -17,6 +19,14 @@
     width: 320px;
     height: calc(100% + 64px);
     z-index: -1;
+
+    @include app.media-below(app.$viewport-tablet) {
+      width: 240px;
+    }
+
+    @include app.media-below(app.$viewport-mobile) {
+      right: -120px;
+    }
   }
 
   @keyframes blob1 {
@@ -39,6 +49,20 @@
     transform-origin: center;
     background: url('/assets/background/bg-1.svg') no-repeat top left / 100%;
     z-index: -1;
+
+    @include app.media-below(app.$viewport-laptop) {
+      bottom: -120px;
+    }
+
+    @include app.media-below(app.$viewport-tablet) {
+      width: 360px;
+      height: 412px;
+      left: -130px;
+    }
+
+    @include app.media-below(app.$viewport-mobile) {
+      left: -230px;
+    }
   }
 
   @keyframes blob2 {
@@ -61,6 +85,20 @@
     transform-origin: center;
     background: url('/assets/background/bg-2.svg') no-repeat top left / 100%;
     z-index: -1;
+
+    @include app.media-below(app.$viewport-laptop) {
+      bottom: 340px;
+    }
+
+    @include app.media-below(app.$viewport-tablet) {
+      width: 100px;
+      height: 168px;
+      bottom: 248px;
+    }
+
+    @include app.media-below(app.$viewport-mobile) {
+      display: none;
+    }
   }
 }
 

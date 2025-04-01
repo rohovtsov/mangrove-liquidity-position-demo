@@ -1,8 +1,14 @@
+@use "@/mixins/app";
+
 .layout-nav {
   display: flex;
   align-items: center;
   gap: 36px;
   height: 100%;
+
+  @include app.media-below(app.$viewport-mobile) {
+    gap: 12px;
+  }
 }
 
 .logo {
@@ -19,6 +25,10 @@
 
   > span {
     padding-top: 4px;
+
+    @include app.media-below(app.$viewport-mobile) {
+      display: none;
+    }
   }
 }
 
@@ -46,6 +56,10 @@
 
     i {
       font-size: 16px;
+
+      @include app.media-below(app.$viewport-mobile) {
+        display: none;
+      }
     }
 
     &.active {
