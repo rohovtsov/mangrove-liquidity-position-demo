@@ -1,9 +1,9 @@
+'use client';
 import styles from "./not-found.module.scss";
 import LaggingText from '@/modules/ui/lagging-text/lagging-text.component';
 import PrettyButton from '@/modules/ui/pretty-button/pretty-button.component';
 import Icon from '@/modules/ui/icon/icon.component';
 import Background from '@/modules/ui/background/background.component';
-import { randomStr } from '@/modules/utils/random';
 import NotFoundImage from '@/modules/ui/not-found-image/not-found-image.component';
 
 export default function NotFound() {
@@ -41,7 +41,7 @@ export default function NotFound() {
               Go Back
             </PrettyButton>
 
-            <PrettyButton href={`/not-found-${randomStr(10)}`} variant="secondary">
+            <PrettyButton onClick={() => window.location.reload()} variant="secondary">
               <span className="pretty-button-icon prefix"><Icon name="refresh" source="material" /></span>
               Reload
             </PrettyButton>
