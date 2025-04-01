@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { LiquidityEntry, TokenPrice } from '@/modules/api/entities';
+import { clamp } from '@/modules/utils/math';
 
 export interface MinMaxState {
   min: number;
@@ -50,9 +51,11 @@ export function applyRangeMinMaxChange(change: 'min' | 'max', value: number, old
   let centerRange = 0;
 
   if (change === 'max') {
+    value = clamp(value, oldMinMax.rangeMin + 1, oldMinMax.absoluteMax);
     newRange = (value - oldMinMax.rangeMin);
     centerRange = (oldMinMax.rangeMin + value) / 2;
   } else if (change === 'min') {
+    value = clamp(value, oldMinMax.absoluteMin, oldMinMax.rangeMax - 1);
     newRange = (oldMinMax.rangeMax - value);
     centerRange = (oldMinMax.rangeMax + value) / 2;
   }
